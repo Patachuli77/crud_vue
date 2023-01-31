@@ -18,7 +18,6 @@ class Controlador{
 	 */
 	constructor(){
 		$(document).ready(this.iniciar.bind(this))
-		
 	}
 	/**
 	 * Inicializa la aplicaion
