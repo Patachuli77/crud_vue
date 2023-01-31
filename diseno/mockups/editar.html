@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="stylesheet" type=text/css href="../../src/www/css/estilo.css"/>
+        <meta charset="UTF-8">
+        <meta author="Jorge Ortega Rivera">
+    </head>
+    <body>
+       <header>
+            <a href="index.html" class="logo"><img src="../../src/www/assets/imagenes/logo.svg" alt="logo empresa"></a>
+       </header>
+       <main id="edicion">
+        <div id="formularios">
+                <label>Foto de la prenda</label>
+                <input type="file" name="foto">
+                <label>Nombre</label>
+                <input type="text" name="nombre">
+                <label>Talla</label>
+                <input type="number" name="talla">
+                <label>Dia comprado</label>
+                <input type="date" name="talla">
+                <label>Descripcion</label>
+                <textarea name="descripcion" ></textarea>
+                <label>Tipo</label>
+                <select name="tipo">
+                     <option value="arriba">Parte de arriba</option>
+                     <option value="abajo">Parte de abajo</option>
+                     <option value="accesorio">Accesorio</option>
+                     <option value="calzado">Calzado</option>
+                </select>
+                <label>Estacion</label>
+                <label><input type="checkbox" name="pri"> Primavera</label>
+                <label><input type="checkbox" name="ver"> Verano</label>
+                <label><input type="checkbox" name="oto"> Otoño</label>
+                <label><input type="checkbox" name="inv"> Invierno</label>
+        </div>
+        <div class="botones">
+            <a href="datos.html"><span id="volver">Volver</span></a>
+            <a href="index.html"><span id="eliminar">Eliminar</span></a>
+            <a href="datos.html"><span id="guardar">Guardar</span></a>
+        </div>
+       </main>
+    </body>
+</html>

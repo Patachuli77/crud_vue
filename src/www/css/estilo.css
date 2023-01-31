@@ -1,0 +1,232 @@
+/*Jorge Ortega*/
+/* Importamos al css la fuentes descargada */
+@font-face {
+    font-family: 'leagueSpartan';
+    src: url('../assets/fuentes/League_Spartan/LeagueSpartan-Bold.ttf') format('truetype');
+}
+*{
+    margin:0;
+    padding: 0;
+    font-family: Verdana;
+}
+h1,h2,h3{
+    font-family:'leagueSpartan' ;
+}
+a{
+    text-decoration: none;
+    color:black
+}
+header{
+    background-color: #1a1a1a;
+    width: 98%;
+    padding:5px 1% 5px 1%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+}
+header a.logo{
+    width:200px;
+    flex-shrink: 0;
+}
+header a.logo img{
+    width: 100%;
+    height: auto;
+}
+header div.resaltado{
+    padding: 10px;
+    flex-shrink: 1;
+    display: none;
+}
+header div.resaltado h1{
+    color: white ;
+}
+header div.resaltado:hover{
+    background-color: #392F63;
+}
+main{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+/***********LISTADO***********/
+/*Inicio Primero*/
+div#inicio{
+    display: flex;
+    flex-direction: column;
+   justify-content:center;
+   text-align: center;
+   margin-top: 30vh;
+}
+div#inicio button{
+   
+    align-self: center;
+    margin-top: 1vh;
+    width: 40%;
+    height: 4vh;
+    background-color: #856DE8;
+    color:white;
+    border:none;
+}
+
+
+/*Grid de ropa*/
+div#gridRopa{
+    padding:5px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+/*Dentro del div de ropa*/
+div.cajaRopa{
+    border:solid black 1px;
+    text-align: center;
+}
+div.cajaRopa img{
+    width:200px;
+    height: auto;
+}
+div.cajaRopa p.oculto{
+    display: none;
+}
+/***********ALTA***********/
+div#formularios{
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: #856DE8;
+    width: 50%;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 3px solid #392F63;
+    padding: 20px;
+
+}
+div#formularios label{
+   color:white;
+}
+main#alta div.botones{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: flex-end;
+    width: 50%;
+    margin-top: 30px;
+    gap:20px;
+}
+main#alta div.botones button{
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+   
+}
+main#alta div.botones button#cancelar{
+    background-color: red;
+}
+main#alta div.botones button.aceptar{
+    background-color: lightgreen;
+}
+.ui-dialog{
+    background-color: lightgreen;
+}
+.ui-dialog-titlebar{
+    background-color: green;
+}
+.ui-dialog-titlebar-close{
+    float:right;
+}
+/************EDITAR*****************/
+main#edicion div.botones{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: flex-end;
+    width: 50%;
+    margin-top: 30px;
+    gap:20px;
+}
+main#edicion div.botones span{
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+   
+}
+main#edicion div.botones span#volver{
+    background-color: orange;
+}
+main#edicion div.botones span#eliminar{
+    background-color: red;
+}
+main#edicion div.botones span#guardar{
+    background-color: lightgreen;
+}
+/*******consulta*******/
+main#consulta div#formularios img{
+    width: 100px;
+    height: autoº;
+}
+main#consulta div.botones{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: flex-end;
+    width: 50%;
+    margin-top: 30px;
+    gap:20px;
+}
+main#consulta div.botones span{
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+main#consulta div.botones span#volver{
+    background-color: orange;
+}
+main#consulta div.botones span#editar{
+    background-color: lightgreen;
+}
+/*Busqueda*/
+div#buscar{
+    display: flex;
+    flex-direction: column;
+   justify-content:center;
+   text-align: center;
+   margin-top: 30vh;
+}
+div#buscar button{
+    align-self: center;
+    margin-top: 1vh;
+    width: 40%;
+    height: 4vh;
+    background-color: #856DE8;
+    color:white;
+    border:none;
+
+}
+div#buscar input{
+    align-self: center;
+    margin-top: 1vh;
+    width: 40%;
+    height: 4vh;
+}
+
+
+
+
+
+
+/*Especiales y errores**/
+#listado,#edicion,#alta,#consulta,#busqueda{
+    display: none;
+}
+h3.error{
+    color:red;
+    display: none;
+}
+.textoerror{
+    color: red !important;
+}
