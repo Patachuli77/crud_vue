@@ -230,3 +230,9 @@ h3.error{
 .textoerror{
     color: red !important;
 }
+.flex{
+    display: flex;
+}
+.none{
+    display: none;
+}

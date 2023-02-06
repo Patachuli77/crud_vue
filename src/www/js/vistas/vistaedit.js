@@ -4,8 +4,140 @@
  */
 import {Vista} from './vista.js'
 import {Ropa} from '../modelo/ropa.js'
-export class VistaEdit extends Vista{
-	constructor(controlador, div){
+export function VistaEdit(controlador){
+	return Vue.createApp({
+		data(){
+			return{
+				controlador:controlador,
+			}
+		},
+		methods:{
+			/**
+			 * Metodo que muestra los datos del objeto en la vista de edicion
+			 * @param {object} ropa 
+			 */
+			mostrarDatos(ropa){
+				
+				this.limpiar()
+				this.quitarErrores()
+				this.id = ropa.id
+				
+				if(this.op1.val()==ropa.tipo)
+					this.op1.attr('selected','selected')
+				if(this.op2.val()==ropa.tipo)
+					this.op2.attr('selected','selected')
+				if(this.op3.val()==ropa.tipo)
+					this.op3.attr('selected','selected')
+				if(this.op4.val()==ropa.tipo)
+					this.op4.attr('selected','selected')
+						
+				this.pri.prop("checked",ropa.estacion[0])
+				this.ver.prop("checked",ropa.estacion[1])	
+				this.oto.prop("checked",ropa.estacion[2])	
+				this.inv.prop("checked",ropa.estacion[3])
+				
+				
+				this.nombre.val(ropa.nombre) 
+				this.talla.val(ropa.talla)
+				this.dia.val(ropa.diaComprado)
+				this.descripcion.val(ropa.descripcion)
+		
+			},
+			/**
+			 * Metodo que limpia el formulario despues de su uso por si acacso
+			 */
+			limpiar(){
+				this.op1.attr('selected','selected')
+				
+				this.pri.prop("checked",false)
+				this.ver.prop("checked",false)
+				this.oto.prop("checked",false)		
+				this.inv.prop("checked",false)
+
+				
+				this.nombre.val('')
+				this.talla.val('')
+				this.dia.val('')
+				this.descripcion.val('')
+			},/**
+			* MEtodo que llama al controlador para borrar
+			*/
+			borrar(){
+				this.controlador.borrado(this.id)
+			},
+			/**
+			 * Metodo que valida los datos del formulario y decide si enviarlos o no dependindo del resultado
+			 */
+			guardar(){
+				let imagenSrc= "../../src/www/assets/imagenes/camiseta1.jpg"//IGNORAR POR EL MOMENTO
+				let nombre = this.nombre.val()
+				let talla = this.talla.val()
+				let dia = this.dia.val() //Año mes dia
+				let descripcion = this.descripcion.val()
+				let tipo = this.tipo.val()
+				let valArray = true
+				
+				let array = []
+				array.push(this.pri.prop("checked"),this.ver.prop("checked"),this.oto.prop("checked"),this.inv.prop("checked"))
+				
+				if(array[0]==false && array[1]==false && array[2]==false&& array[3]==false){
+					valArray= false
+				}
+				
+				if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || valArray==false){
+					if (nombre==''){
+						this.h3Error1.css('display','block')
+						this.lbNombre.addClass("textoerror",1000)
+					} 
+					if (talla==''){
+						this.h3Error1.css('display','block')
+						this.lbTalla.addClass("textoerror",1000)
+					} 
+					if (dia==''){
+						this.h3Error1.css('display','block')
+						this.lbDia.addClass("textoerror",1000)
+					} 
+					if (descripcion==''){
+						this.h3Error1.css('display','block')
+						this.lbDescripcion.addClass("textoerror",1000)
+					} 
+					if (valArray==false){
+						this.h3Error1.css('display','block')
+						this.lbEstacion.addClass("textoerror",1000)
+					} 
+					if (talla<0){
+						this.h3Error2.css('display','block')
+						this.lbTalla.addClass("textoerror",1000)
+					} 	
+				}else{
+
+					let objeto = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
+					this.controlador.guardar(this.id,objeto)
+					this.limpiar()
+					
+				}
+			},/**
+			* Metodo para volver a la vista anterior
+			*/
+			volver(){
+				this.quitarErrores()
+				this.controlador.pulsarHeadCons()
+			},
+			/**
+			 * Metodo para quitar los avisos por datos incorrectos
+			 */
+			quitarErrores(){
+				this.h3Error2.css('display','none')
+				this.h3Error1.css('display','none')
+				this.lbNombre.removeClass("textoerror")
+				this.lbTalla.removeClass("textoerror")
+				this.lbDia.removeClass("textoerror")
+				this.lbDescripcion.removeClass("textoerror")
+				this.lbEstacion.removeClass("textoerror")
+			}
+		},
+	})
+	/*constructor(controlador, div){
 		super(div)
 		this.controlador = controlador
 		
@@ -47,133 +179,5 @@ export class VistaEdit extends Vista{
 		
 		
 		this.id = ''
-	}/**
-	 * Metodo que muestra los datos del objeto en la vista de edicion
-	 * @param {object} ropa 
-	 */
-	mostrarDatos(ropa){
-		
-		this.limpiar()
-		this.quitarErrores()
-		this.id = ropa.id
-		
-		if(this.op1.val()==ropa.tipo)
-			this.op1.attr('selected','selected')
-		if(this.op2.val()==ropa.tipo)
-			this.op2.attr('selected','selected')
-		if(this.op3.val()==ropa.tipo)
-			this.op3.attr('selected','selected')
-		if(this.op4.val()==ropa.tipo)
-			this.op4.attr('selected','selected')
-		
-		this.pri.prop("checked",ropa.estacion[0])
-		this.ver.prop("checked",ropa.estacion[1])	
-		this.oto.prop("checked",ropa.estacion[2])	
-		this.inv.prop("checked",ropa.estacion[3])
-		
-		
-		this.nombre.val(ropa.nombre) 
-		this.talla.val(ropa.talla)
-		this.dia.val(ropa.diaComprado)
-		this.descripcion.val(ropa.descripcion)
-		
-	}
-	/**
-	 * Metodo que limpia el formulario despues de su uso por si acacso
-	 */
-	limpiar(){
-		this.op1.attr('selected','selected')
-		
-		this.pri.prop("checked",false)
-		this.ver.prop("checked",false)
-		this.oto.prop("checked",false)		
-		this.inv.prop("checked",false)
-
-		
-		this.nombre.val('')
-		this.talla.val('')
-		this.dia.val('')
-		this.descripcion.val('')
-	}/**
-	 * MEtodo que llama al controlador para borrar
-	 */
-	borrar(){
-		this.controlador.borrado(this.id)
-	}
-	/**
-	 * Metodo que valida los datos del formulario y decide si enviarlos o no dependindo del resultado
-	 */
-	guardar(){
-		let imagenSrc= "../../src/www/assets/imagenes/camiseta1.jpg"//IGNORAR POR EL MOMENTO
-		let nombre = this.nombre.val()
-		let talla = this.talla.val()
-		let dia = this.dia.val() //Año mes dia
-		let descripcion = this.descripcion.val()
-		let tipo = this.tipo.val()
-		let valArray = true
-		
-		let array = []
-		array.push(this.pri.prop("checked"),this.ver.prop("checked"),this.oto.prop("checked"),this.inv.prop("checked"))
-		
-		if(array[0]==false && array[1]==false && array[2]==false&& array[3]==false){
-			valArray= false
-		}
-		
-		if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || valArray==false){
-			if (nombre==''){
-				this.h3Error1.css('display','block')
-				this.lbNombre.addClass("textoerror",1000)
-			} 
-			if (talla==''){
-				this.h3Error1.css('display','block')
-				this.lbTalla.addClass("textoerror",1000)
-			} 
-			if (dia==''){
-				this.h3Error1.css('display','block')
-				this.lbDia.addClass("textoerror",1000)
-			} 
-			if (descripcion==''){
-				this.h3Error1.css('display','block')
-				this.lbDescripcion.addClass("textoerror",1000)
-			} 
-			if (valArray==false){
-				this.h3Error1.css('display','block')
-				this.lbEstacion.addClass("textoerror",1000)
-			} 
-			if (talla<0){
-				this.h3Error2.css('display','block')
-				this.lbTalla.addClass("textoerror",1000)
-			} 	
-		}else{
-
-			let objeto = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
-			this.controlador.guardar(this.id,objeto)
-			this.limpiar()
-			
-		}
-
-	
-		
-		
-
-		
-	}/**
-	 * Metodo para volver a la vista anterior
-	 */
-	volver(){
-		this.quitarErrores()
-		this.controlador.pulsarHeadCons()
-	}
-	/**
-	 * Metodo para quitar los avisos por datos incorrectos
-	 */
-	quitarErrores(){
-		this.h3Error2.css('display','none')
-		this.h3Error1.css('display','none')
-		this.lbNombre.removeClass("textoerror")
-		this.lbTalla.removeClass("textoerror")
-		this.lbDia.removeClass("textoerror")
-		this.lbDescripcion.removeClass("textoerror")
-		this.lbEstacion.removeClass("textoerror")
-	}
+	}*/
 }

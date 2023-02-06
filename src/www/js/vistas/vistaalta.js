@@ -4,8 +4,113 @@
  */
 import {Vista} from './vista.js'
 import {Ropa} from '../modelo/ropa.js'
-export class VistaAlta extends Vista{
-	constructor(controlador, div){
+export function VistaAlta (controlador){
+	return Vue.createApp({
+		data(){
+			return{
+				cotrolador:controlador,
+			}
+		},
+		methods:{
+			/**
+			 * Metodo que valida los datos y los envia o no al alta dependiendo del resultado
+			 * @param {int} num depende de por donde se llegue al metodo el resultado varia
+			 */
+			validar(num){
+				
+				let imagenSrc= "../../src/www/assets/imagenes/camiseta1.jpg"//IGNORAR POR EL MOMENTO
+				let nombre = this.formNombre.val()
+				
+				let talla = this.formTalla.val()
+				let dia = this.formDia.val() //Año mes dia
+				let descripcion = this.formDescripcion.val()
+				let tipo = this.formTipo.val()
+				let valArray = true
+				let div =$('<div></div>')
+				let p = $('<p></p>').text("Su prenda ha sido añadida correctamente, revise el listado")
+				div.attr('title', 'Enhorabuena')
+				div.append(p)
+
+				let array = []
+				array.push(this.pri.prop("checked"),this.ver.prop("checked"),this.oto.prop("checked"),this.inv.prop("checked"))
+				
+				if(array[0]==false && array[1]==false && array[2]==false&& array[3]==false){
+					valArray= false
+				}
+				
+				if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || valArray==false){
+					if (nombre==''){
+						this.h3Error1.css('display','block')
+						this.lbNombre.addClass("textoerror",1000)
+					} 
+					if (talla==''){
+						this.h3Error1.css('display','block')
+						this.lbTalla.addClass("textoerror",1000)
+					} 
+					if (dia==''){
+						this.h3Error1.css('display','block')
+						this.lbDia.addClass("textoerror",1000)
+					} 
+					if (descripcion==''){
+						this.h3Error1.css('display','block')
+						this.lbDescripcion.addClass("textoerror",1000)
+					} 
+					if (valArray==false){
+						this.h3Error1.css('display','block')
+						this.lbEstacion.addClass("textoerror",1000)
+					} 
+					if (talla<0){
+						this.h3Error2.css('display','block')
+						this.lbTalla.addClass("textoerror",1000)
+					} 	
+				}else{
+
+					let objeto = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
+					this.controlador.insertar(objeto)
+					this.limpiar()
+					div.dialog()
+					if(num==0){
+						
+						this.volver()
+					}
+				}	
+			},
+			/**
+			* Metodo que vuelve a la vista principal sin realizar cambios
+			*/
+			volver(){
+				this.limpiar()
+				this.controlador.listar()
+				this.controlador.pulsarHeadList()
+			},
+			/**
+			* Metodo que limpia el formulario cada vez que se inicializa
+			*/
+			limpiar(){
+				this.op1.attr('selected','selected')
+				this.pri.prop("checked",false)
+				this.ver.prop("checked",false)	
+				this.oto.prop("checked",false)		
+				this.inv.prop("checked",false)
+
+
+				
+				this.formNombre.val('')
+				this.formTalla.val('')
+				this.formDia.val('')
+				this.formDescripcion.val('')
+
+				this.h3Error2.css('display','none')
+				this.h3Error1.css('display','none')
+				this.lbNombre.removeClass("textoerror")
+				this.lbTalla.removeClass("textoerror")
+				this.lbDia.removeClass("textoerror")
+				this.lbDescripcion.removeClass("textoerror")
+				this.lbEstacion.removeClass("textoerror")
+			}
+		}
+	})
+	/*constructor(controlador, div){
 		super(div)
 		this.controlador = controlador
 		
@@ -47,105 +152,5 @@ export class VistaAlta extends Vista{
 		this.btnAceptarVolver.keypress(this.validar.bind(this,0))
 		this.btnCancelar.click(this.volver.bind(this))
 		this.btnCancelar.keypress(this.volver.bind(this))
-	}/**
-	 * Metodo que valida los datos y los envia o no al alta dependiendo del resultado
-	 * @param {int} num depende de por donde se llegue al metodo el resultado varia
-	 */
-	validar(num){
-		
-		let imagenSrc= "../../src/www/assets/imagenes/camiseta1.jpg"//IGNORAR POR EL MOMENTO
-		let nombre = this.formNombre.val()
-		
-		let talla = this.formTalla.val()
-		let dia = this.formDia.val() //Año mes dia
-		let descripcion = this.formDescripcion.val()
-		let tipo = this.formTipo.val()
-		let valArray = true
-		let div =$('<div></div>')
-		let p = $('<p></p>').text("Su prenda ha sido añadida correctamente, revise el listado")
-		div.attr('title', 'Enhorabuena')
-		div.append(p)
-		
-		
-		
-		let array = []
-		array.push(this.pri.prop("checked"),this.ver.prop("checked"),this.oto.prop("checked"),this.inv.prop("checked"))
-		
-		if(array[0]==false && array[1]==false && array[2]==false&& array[3]==false){
-			valArray= false
-		}
-		
-		if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || valArray==false){
-			if (nombre==''){
-				this.h3Error1.css('display','block')
-				this.lbNombre.addClass("textoerror",1000)
-			} 
-			if (talla==''){
-				this.h3Error1.css('display','block')
-				this.lbTalla.addClass("textoerror",1000)
-			} 
-			if (dia==''){
-				this.h3Error1.css('display','block')
-				this.lbDia.addClass("textoerror",1000)
-			} 
-			if (descripcion==''){
-				this.h3Error1.css('display','block')
-				this.lbDescripcion.addClass("textoerror",1000)
-			} 
-			if (valArray==false){
-				this.h3Error1.css('display','block')
-				this.lbEstacion.addClass("textoerror",1000)
-			} 
-			if (talla<0){
-				this.h3Error2.css('display','block')
-				this.lbTalla.addClass("textoerror",1000)
-			} 	
-		}else{
-
-			let objeto = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
-			this.controlador.insertar(objeto)
-			this.limpiar()
-			div.dialog()
-			if(num==0){
-				
-				this.volver()
-			}
-
-		}
-		
-		
-	}
-	/**
-	 * Metodo que vuelve a la vista principal sin realizar cambios
-	 */
-	volver(){
-		this.limpiar()
-		this.controlador.listar()
-		this.controlador.pulsarHeadList()
-	}
-	/**
-	 * Metodo que limpia el formulario cada vez que se inicializa
-	 */
-	limpiar(){
-		this.op1.attr('selected','selected')
-		this.pri.prop("checked",false)
-		this.ver.prop("checked",false)	
-		this.oto.prop("checked",false)		
-		this.inv.prop("checked",false)
-
-
-		
-		this.formNombre.val('')
-		this.formTalla.val('')
-		this.formDia.val('')
-		this.formDescripcion.val('')
-
-		this.h3Error2.css('display','none')
-		this.h3Error1.css('display','none')
-		this.lbNombre.removeClass("textoerror")
-		this.lbTalla.removeClass("textoerror")
-		this.lbDia.removeClass("textoerror")
-		this.lbDescripcion.removeClass("textoerror")
-		this.lbEstacion.removeClass("textoerror")
-	}
+	}*/
 }

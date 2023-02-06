@@ -9,7 +9,7 @@ import {VistaList} from '../vistas/vistalista.js'
 import {VistaAlta} from '../vistas/vistaalta.js'
 import{VistaEdit} from '../vistas/vistaedit.js'
 import {VistaHead} from '../vistas/vistahead.js'
-import { VistaCons } from '../vistas/vistacons.js'
+import {VistaCons} from '../vistas/vistacons.js'
 import{VistaBusq} from '../vistas/vistabusq.js'
 
 class Controlador{
@@ -17,7 +17,7 @@ class Controlador{
 	 * Constructor de la clase
 	 */
 	constructor(){
-		$(document).ready(this.iniciar.bind(this))
+		window.onload = this.iniciar.bind(this)
 	}
 	/**
 	 * Inicializa la aplicaion
@@ -25,14 +25,13 @@ class Controlador{
 	iniciar(){
 		this.modelo = new Modelo()
 		
-		this.head = $('header')
-	
-		this.vistaHead = new VistaHead(this,this.head)
-		this.mainList = new VistaList(this, $('#listado'))
-		this.mainEdit = new VistaEdit(this, $('#edicion'))
-		this.mainAlta = new VistaAlta(this,$('#alta'))
-        this.mainCons = new VistaCons(this, $('#consulta'))
-		this.mainBusq = new VistaBusq(this, $('#busqueda'))
+		this.vistaHead = new VistaHead(this).mount('#header')
+		this.mainList = new VistaList(this).mount('#listado')
+		this.mainEdit = new VistaEdit(this).mount('#edicion')
+		this.mainAlta = new VistaAlta(this).mount('#alta')
+        this.mainCons = new VistaCons(this).mount('#consulta')
+		this.mainBusq = new VistaBusq(this).mount('#busqueda')
+		
 		
 		this.mainList.mostrar(true)
 		

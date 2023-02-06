@@ -3,8 +3,33 @@
  * @author	Jorge Ortega <jorge77.ortega@gmail.com>
  */
 import {Vista} from './vista.js'
-export class VistaBusq extends Vista{
-	constructor(controlador, div){
+export function VistaBusq(controlador){
+	return Vue.createApp({
+		data(){
+			return{
+				controlador:controlador,
+			}
+		},
+		methods:{
+			/**
+			 * Metodo que llama al controlador para buscar 
+			 */
+			buscar(){
+
+				this.texto= this.div.find('input').eq(0)
+				
+				this.controlador.buscar(this.texto.val())
+				this.limpiar()
+			},
+			/**
+			 * Metodo que limpia el buscador despues de la busqueda
+			 */
+			limpiar(){
+				this.texto.val('')
+			}
+		}
+	})
+	/*constructor(controlador, div){
 		super(div)
 		this.controlador = controlador
 		
@@ -12,22 +37,5 @@ export class VistaBusq extends Vista{
 		this.btnListar.click(this.buscar.bind(this))
 		this.btnListar.keypress(this.buscar.bind(this))
 		
-	}
-	/**
-	 * Metodo que llama al controlador para buscar 
-	 */
-	buscar(){
-
-		this.texto= this.div.find('input').eq(0)
-		
-		this.controlador.buscar(this.texto.val())
-		this.limpiar()
-	}
-	/**
-	 * Metodo que limpia el buscador despues de la busqueda
-	 */
-	limpiar(){
-		this.texto.val('')
-	}
-
+	}*/
 }
