@@ -134,6 +134,12 @@ export function VistaEdit(controlador){
 				this.lbDia.removeClass("textoerror")
 				this.lbDescripcion.removeClass("textoerror")
 				this.lbEstacion.removeClass("textoerror")
+			},
+			ver(ver){
+				if(ver)
+					this.mostrar = 'flex'
+				else
+				this.mostrar ='none'
 			}
 		},
 	})

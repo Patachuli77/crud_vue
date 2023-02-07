@@ -34,6 +34,9 @@ class Controlador{
 		
 		this.mainList.ver(true)
 		
+	}
+	descubrir(){
+		this.vistaHead.descubrir()
 	}	
 	/**
 	 * Metodo que muestra la vista de listar
@@ -41,53 +44,53 @@ class Controlador{
 	pulsarHeadList(){
 		this.mainList.ver(true)
 		
-		this.mainEdit.mostrar(false)
-		this.mainAlta.mostrar(false)
-        this.mainCons.mostrar(false)
-		this.mainBusq.mostrar(false)
+		this.mainEdit.ver(false)
+		this.mainAlta.ver(false)
+        this.mainCons.ver(false)
+		this.mainBusq.ver(false)
 	}
 	/**
 	 * Metodo que muesta la vista de la edicion
 	 */
 	pulsarHeadEdit(){
-		this.mainList.mostrar(false)
-		this.mainEdit.mostrar(true)
-		this.mainAlta.mostrar(false)
-        this.mainCons.mostrar(false)
-		this.mainBusq.mostrar(false)
+		this.mainList.ver(false)
+		this.mainEdit.ver(true)
+		this.mainAlta.ver(false)
+        this.mainCons.ver(false)
+		this.mainBusq.ver(false)
 	}
 	/**
 	 * Metodo que muestra la vista del alta
 	 */
 	pulsarHeadAlta(){
-		this.mainAlta.limpiar()
-		this.mainList.mostrar(false)
-		this.mainEdit.mostrar(false)
-		this.mainAlta.mostrar(true)
-        this.mainCons.mostrar(false)
-		this.mainBusq.mostrar(false)
+		//this.mainAlta.limpiar()
+		this.mainList.ver(false)
+		this.mainEdit.ver(false)
+		this.mainAlta.ver(true)
+        this.mainCons.ver(false)
+		this.mainBusq.ver(false)
 	}
     /**
 	 * Metodo que muestra la vista de la consulta de datos
 	 */
 	pulsarHeadCons(){
 		
-		this.mainList.mostrar(false)
-		this.mainEdit.mostrar(false)
-		this.mainAlta.mostrar(false)
-        this.mainCons.mostrar(true)
-		this.mainBusq.mostrar(false)
+		this.mainList.ver(false)
+		this.mainEdit.ver(false)
+		this.mainAlta.ver(false)
+        this.mainCons.ver(true)
+		this.mainBusq.ver(false)
 		
 	}
 	/**
 	 * Metodo que muestra la vista de buscar
 	 */
 	pulsarBuscar(){
-		this.mainList.mostrar(false)
-		this.mainEdit.mostrar(false)
-		this.mainAlta.mostrar(false)
-        this.mainCons.mostrar(false)
-		this.mainBusq.mostrar(true)
+		this.mainList.ver(false)
+		this.mainEdit.ver(false)
+		this.mainAlta.ver(false)
+        this.mainCons.ver(false)
+		this.mainBusq.ver(true)
 	}
 	/**
 	 * Metodo que llama al modelo para insertar datos en el indexed

@@ -26,6 +26,12 @@ export function VistaBusq(controlador){
 			 */
 			limpiar(){
 				this.texto.val('')
+			},
+			ver(ver){
+				if(ver)
+					this.mostrar = 'flex'
+				else
+				this.mostrar ='none'
 			}
 		}
 	})

@@ -10,14 +10,23 @@ export function VistaList(controlador){
 				controlador: controlador,
 				mostrar1: 'flex',
 				mostrar2: 'none',
+				mostrar: 'block',
 			}
 		},	
-		template:`<div id="inicio" :class=mostrar1>
-					<h1>Bienvenido a tu armario virtual</h1>
-					<h2>Presiona el boton para comenzar</h2>
-					<button tabindex="1" @click=listar>Empezar</button>
-					</div>
-					<div id="gridRopa" :class=mostrar2></div>`,
+		template:`<div :class=mostrar>
+						<div id="inicio" :class=mostrar1>
+						<h1>Bienvenido a tu armario virtual</h1>
+						<h2>Presiona el boton para comenzar</h2>
+						<button tabindex="1" @click=listar>Empezar</button>
+						</div>
+						<div id="gridRopa" :class=mostrar2>
+							<div class="cajaRopa" @click=pulsarCaja>
+								<p class="oculto">123123</p>
+								<img src="../../src/www/assets/imagenes/camiseta1.jpg">
+								<h3>Nombre prenda</h3>
+							</div>
+						</div>
+					<div>`,
 		methods:{
 			/**
 			 * Metodo que elimina la fachada de carga inicial y cambia a la vista normal
@@ -25,7 +34,7 @@ export function VistaList(controlador){
 			listar(){
 				this.mostrar1= 'none'
 				this.mostrar2 = 'flex'
-				console.log(this.mostrar2)
+				this.controlador.descubrir()
 				
 				this.controlador.listar()
 			},
@@ -34,13 +43,9 @@ export function VistaList(controlador){
 			 * @param {array} lista 
 			 */
 			generarLista(lista){
-				//console.log(lista)
-				this.listado.html("")
-				let i=5
-				let t10 =0
-				let t20=0
-				let t30=0
-				let t40=0
+				console.log(lista)
+				/*this.listado.html("")
+				
 				
 				
 				let div = $('<div></div>')
@@ -70,6 +75,8 @@ export function VistaList(controlador){
 						this.listado.append(divCaja)
 						divCaja.click(this.pulsarCaja.bind(this, element.id))
 						divCaja.keypress(this.pulsarCaja.bind(this, element.id))
+
+
 						i++
 						element.talla
 						if(element.talla<=10)
@@ -130,21 +137,24 @@ export function VistaList(controlador){
 				.attr("r", 7)
 
 				///////////////////////
-				
+				*/
 			},
 			/**
 			* Metodo que indica al controlador que se ha pulsado una caja
 			* @param {string} id 
 			*/	
 			pulsarCaja(id){
-				
+				console.log("bien")
 				this.controlador.pulsarRopa(id)
 			},
 			ver(ver){
-				if(ver)
-					this.mostar = 'flex'
-				else
-				this.mostar ='none'
+				if(ver){
+					this.mostrar='block'
+				}
+				else{
+					
+					this.mostrar='none'
+				}
 			}
 
 		}

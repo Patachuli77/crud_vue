@@ -53,6 +53,12 @@ export function VistaCons(controlador){
 			*/
 			volver(){
 				this.controlador.pulsarHeadList()
+			},
+			ver(ver){
+				if(ver)
+					this.mostrar = 'flex'
+				else
+				this.mostrar ='none'
 			}
 		}
 	})
