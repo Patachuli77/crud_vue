@@ -32,15 +32,14 @@ class Controlador{
         this.mainCons = new VistaCons(this).mount('#consulta')
 		this.mainBusq = new VistaBusq(this).mount('#busqueda')
 		
-		
-		this.mainList.mostrar(true)
+		this.mainList.ver(true)
 		
 	}	
 	/**
 	 * Metodo que muestra la vista de listar
 	 */
 	pulsarHeadList(){
-		this.mainList.mostrar(true)
+		this.mainList.ver(true)
 		
 		this.mainEdit.mostrar(false)
 		this.mainAlta.mostrar(false)

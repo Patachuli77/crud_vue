@@ -220,7 +220,7 @@ div#buscar input{
 
 
 /*Especiales y errores**/
-#listado,#edicion,#alta,#consulta,#busqueda{
+#edicion,#alta,#consulta,#busqueda{
     display: none;
 }
 h3.error{
@@ -231,8 +231,8 @@ h3.error{
     color: red !important;
 }
 .flex{
-    display: flex;
+    display: flex !important;
 }
 .none{
-    display: none;
+    display: none !important;
 }

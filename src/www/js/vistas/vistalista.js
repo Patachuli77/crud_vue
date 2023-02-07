@@ -8,21 +8,26 @@ export function VistaList(controlador){
 		data(){
 			return{
 				controlador: controlador,
-				mostrar: 'flex',
+				mostrar1: 'flex',
+				mostrar2: 'none',
 			}
 		},	
+		template:`<div id="inicio" :class=mostrar1>
+					<h1>Bienvenido a tu armario virtual</h1>
+					<h2>Presiona el boton para comenzar</h2>
+					<button tabindex="1" @click=listar>Empezar</button>
+					</div>
+					<div id="gridRopa" :class=mostrar2></div>`,
 		methods:{
 			/**
 			 * Metodo que elimina la fachada de carga inicial y cambia a la vista normal
 			 */
 			listar(){
-
-				this.listado.show("fade",700)
-				this.spanBusq.show("fade",700)
-				this.spanList.show("fade",700)
-				this.inicio.hide(400)
+				this.mostrar1= 'none'
+				this.mostrar2 = 'flex'
+				console.log(this.mostrar2)
+				
 				this.controlador.listar()
-				this.listado.sortable()
 			},
 			/**
 			 * Metodo que genera la estructura de la lista y la mete en la vista
@@ -135,16 +140,18 @@ export function VistaList(controlador){
 				
 				this.controlador.pulsarRopa(id)
 			},
-			mostrar(ver){
+			ver(ver){
 				if(ver)
-					this.div.css('display','flex')
+					this.mostar = 'flex'
 				else
-				this.div.css('display','none')
+				this.mostar ='none'
 			}
 
 		}
 	})
-	/*constructor(controlador, div){
+	
+}
+/*constructor(controlador, div){
 		super(div)
 		
 		this.controlador = controlador
@@ -170,4 +177,3 @@ export function VistaList(controlador){
 		this.logo.keypress(this.listar.bind(this))
 		
 	}*/
-}
