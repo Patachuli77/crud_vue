@@ -9,8 +9,54 @@ export function VistaEdit(controlador){
 		data(){
 			return{
 				controlador:controlador,
+				mostrar: 'none',
+				objeto:{
+					id: null,
+					nombre:null,
+					talla: null,
+					diaComprado: null,
+					descripcion: null,
+					tipo: null,
+					pri: false,
+					ver: false,
+					oto: false,
+					inv: false,
+				},
 			}
 		},
+		template:
+			`<div id="formularios" :class=mostrar>
+				<label>Foto de la prenda</label>
+				<input type="file" name="foto">
+				<label>Nombre</label>
+				<input type="text" v-model=objeto.nombre name="nombre">
+				<label>Talla</label>
+				<input type="number" min="0" v-model=objeto.talla name="talla">
+				<label>Dia comprado</label>
+				<input type="date" v-model=objeto.diaComprado name="dia">
+				<label>Descripcion</label>
+				<textarea name="descripcion" v-model=objeto.descripcion ></textarea>
+				<label>Tipo</label>
+				<select name="tipo" v-model=objeto.tipo>
+					<option value="Parte de arriba">Parte de arriba</option>
+					<option value="Parte de abajo">Parte de abajo</option>
+					<option value="Accesorio">Accesorio</option>
+					<option value="Calzado">Calzado</option>
+				</select>
+				<label>Estación</label>
+				<label><input type="checkbox" v-model=objeto.pri name="pri"> Primavera</label>
+				<label><input type="checkbox" v-model=objeto.ver name="ver"> Verano</label>
+				<label><input type="checkbox" v-model=objeto.oto name="oto"> Otoño</label>
+				<label><input type="checkbox" v-model=objeto.inv name="inv"> Invierno</label>
+				<h3 class="error">Rellene las categorias marcadas para continuar</h3>
+				<h3 class="error">No se admiten valores negativos en la talla</h3>
+			</div>
+			<div class="botones" :class=mostrar>
+				<a><span role="button" id="volver"  @click=volver tabindex="10000017">Volver</span></a>
+				<a><span role="button" id="eliminar"  @click=borrar tabindex="10000018">Eliminar</span></a>
+				<a><span role="button" id="guardar"  @click=guardar tabindex="10000019">Guardar</span></a>
+        	</div> 		
+			`,	
 		methods:{
 			/**
 			 * Metodo que muestra los datos del objeto en la vista de edicion
@@ -20,34 +66,26 @@ export function VistaEdit(controlador){
 				
 				this.limpiar()
 				this.quitarErrores()
-				this.id = ropa.id
-				
-				if(this.op1.val()==ropa.tipo)
-					this.op1.attr('selected','selected')
-				if(this.op2.val()==ropa.tipo)
-					this.op2.attr('selected','selected')
-				if(this.op3.val()==ropa.tipo)
-					this.op3.attr('selected','selected')
-				if(this.op4.val()==ropa.tipo)
-					this.op4.attr('selected','selected')
-						
-				this.pri.prop("checked",ropa.estacion[0])
-				this.ver.prop("checked",ropa.estacion[1])	
-				this.oto.prop("checked",ropa.estacion[2])	
-				this.inv.prop("checked",ropa.estacion[3])
+				this.objeto.id = ropa.id
+				console.log(ropa)
 				
 				
-				this.nombre.val(ropa.nombre) 
-				this.talla.val(ropa.talla)
-				this.dia.val(ropa.diaComprado)
-				this.descripcion.val(ropa.descripcion)
+				this.objeto.nombre = ropa.nombre
+				this.objeto.talla = ropa.talla
+				this.objeto.dia = ropa.diaComprado
+				this.objeto.tipo= ropa.tipo
+				this.objeto.descripcion=ropa.descripcion
+				this.objeto.pri = ropa.estacion[0]
+				this.objeto.ver = ropa.estacion[1]
+				this.objeto.oto = ropa.estacion[2]
+				this.objeto.inv = ropa.estacion[3]
 		
 			},
 			/**
 			 * Metodo que limpia el formulario despues de su uso por si acacso
 			 */
 			limpiar(){
-				this.op1.attr('selected','selected')
+				/*this.op1.attr('selected','selected')
 				
 				this.pri.prop("checked",false)
 				this.ver.prop("checked",false)
@@ -58,27 +96,27 @@ export function VistaEdit(controlador){
 				this.nombre.val('')
 				this.talla.val('')
 				this.dia.val('')
-				this.descripcion.val('')
+				this.descripcion.val('')*/
 			},/**
 			* MEtodo que llama al controlador para borrar
 			*/
 			borrar(){
-				this.controlador.borrado(this.id)
+				this.controlador.borrado(this.objeto.id)
 			},
 			/**
 			 * Metodo que valida los datos del formulario y decide si enviarlos o no dependindo del resultado
 			 */
 			guardar(){
 				let imagenSrc= "../../src/www/assets/imagenes/camiseta1.jpg"//IGNORAR POR EL MOMENTO
-				let nombre = this.nombre.val()
-				let talla = this.talla.val()
-				let dia = this.dia.val() //Año mes dia
-				let descripcion = this.descripcion.val()
-				let tipo = this.tipo.val()
+				let nombre = this.objeto.nombre
+				let talla = this.objeto.talla
+				let dia = this.objeto.dia //Año mes dia
+				let descripcion = this.objeto.descripcion
+				let tipo = this.objeto.tipo
 				let valArray = true
 				
 				let array = []
-				array.push(this.pri.prop("checked"),this.ver.prop("checked"),this.oto.prop("checked"),this.inv.prop("checked"))
+				array.push(this.objeto.pri,this.objeto.ver,this.objeto.oto,this.objeto.inv)
 				
 				if(array[0]==false && array[1]==false && array[2]==false&& array[3]==false){
 					valArray= false
@@ -111,8 +149,8 @@ export function VistaEdit(controlador){
 					} 	
 				}else{
 
-					let objeto = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
-					this.controlador.guardar(this.id,objeto)
+					let ropa = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
+					this.controlador.guardar(this.objeto.id,ropa)
 					this.limpiar()
 					
 				}
@@ -127,13 +165,13 @@ export function VistaEdit(controlador){
 			 * Metodo para quitar los avisos por datos incorrectos
 			 */
 			quitarErrores(){
-				this.h3Error2.css('display','none')
+				/*this.h3Error2.css('display','none')
 				this.h3Error1.css('display','none')
 				this.lbNombre.removeClass("textoerror")
 				this.lbTalla.removeClass("textoerror")
 				this.lbDia.removeClass("textoerror")
 				this.lbDescripcion.removeClass("textoerror")
-				this.lbEstacion.removeClass("textoerror")
+				this.lbEstacion.removeClass("textoerror")*/
 			},
 			ver(ver){
 				if(ver)
@@ -143,47 +181,5 @@ export function VistaEdit(controlador){
 			}
 		},
 	})
-	/*constructor(controlador, div){
-		super(div)
-		this.controlador = controlador
-		
-		this.nombre =this.div.find('input').eq(1)
-		this.talla=this.div.find('input').eq(2)
-		this.dia=this.div.find('input').eq(3)
-		this.descripcion=this.div.find('textarea').eq(0)
-		this.tipo = this.div.find("select").eq(0)
-		this.op1=this.div.find('option').eq(0)
-		this.op2=this.div.find('option').eq(1)
-		this.op3=this.div.find('option').eq(2)
-		this.op4=this.div.find('option').eq(3)
-
-		this.pri=this.div.find('input').eq(4)
-		this.ver=this.div.find('input').eq(5)
-		this.oto=this.div.find('input').eq(6)
-		this.inv=this.div.find('input').eq(7)
-
-		this.lbNombre = this.div.find("label").eq(1)
-		this.lbTalla = this.div.find("label").eq(2)
-		this.lbDia = this.div.find("label").eq(3)
-		this.lbDescripcion = this.div.find("label").eq(4)
-		this.lbEstacion = this.div.find("label").eq(6)
-
-		this.h3Error1 = this.div.find("h3").eq(0)
-		this.h3Error2 = this.div.find("h3").eq(1)
-		
-		this.btnBorrar = this.div.find('a').eq(1)
-		this.btnBorrar.click(this.borrar.bind(this))
-		this.btnBorrar.keypress(this.borrar.bind(this))
-		
-		this.btnEditar = this.div.find('a').eq(2)
-		this.btnEditar.click(this.guardar.bind(this))
-		this.btnEditar.keypress(this.guardar.bind(this))
-
-		this.btnVolver = this.div.find('a').eq(0)
-		this.btnVolver.click(this.volver.bind(this))
-		this.btnVolver.keypress(this.volver.bind(this))
-		
-		
-		this.id = ''
-	}*/
+	
 }

@@ -8,8 +8,40 @@ export function VistaCons(controlador){
 		data(){
 			return{
 				controlador:controlador,
+				mostrar: 'none',
+				objeto:{
+					nombre:null,
+					talla: null,
+					diaComprado: null,
+					descripcion: null,
+					tipo: null,
+					estacion: null,
+				},
 			}
 		},
+		template:`
+				<div id="formularios" :class=mostrar>
+					<label>Foto de la prenda</label>
+					<img src="../../src/www/assets/imagenes/camiseta1.jpg">
+					<label>Nombre</label>
+					<h3>{{objeto.nombre}}</h3>
+					<label>Talla</label>
+					<h3>{{objeto.talla}}</h3>
+					<label>Dia comprado</label>
+					<h3>{{objeto.diaComprado}}</h3>
+					<label>Descripcion</label>
+					<p>{{objeto.descripcion}}</p>
+					<label>Tipo</label>
+					<h3>{{objeto.tipo}}</h3>
+					<label>Estacion</label>
+					<h3>{{objeto.estacion}}</h2>
+				</div>
+				<div class="botones" :class=mostrar>
+					<a><span role="button" id="volver" tabindex="10000005" @click=volver>Volver</span></a>
+					<a><span role="button" id="editar" tabindex="10000006" @click=modificar>Editar</span></a>
+				</div>  
+			<div>
+		`, 
 		methods:{
 			/**
 			 * Metodo que mete los datos del objeto dentro de su sitio en la vista para poder visualizarlos
@@ -28,21 +60,14 @@ export function VistaCons(controlador){
 					cadena+='Invierno, '}
 				cadena = cadena.substring(0, cadena.length - 2)
 
-
-				let nombre =this.div.find('h3').eq(0)
-				let talla=this.div.find('h3').eq(1)
-				let dia=this.div.find('h3').eq(2)
-				let descripcion=this.div.find('p').eq(0)
-				let tipo=this.div.find('h3').eq(3)
-				let estacion=this.div.find('h3').eq(4)
 				
 				
-				nombre.text(ropa.nombre)
-				talla.text(ropa.talla)
-				dia.text(ropa.diaComprado)
-				descripcion.text(ropa.descripcion)
-				tipo.text(ropa.tipo)
-				estacion.text(cadena)
+				this.objeto.nombre = ropa.nombre
+				this.objeto.talla = ropa.talla
+				this.objeto.diaComprado = ropa.diaComprado
+				this.objeto.descripcion = ropa.descripcion
+				this.objeto.tipo = ropa.tipo
+				this.objeto.estacion = cadena
 			},/**
 			* Metodo para cambiar a la vista de editar
 			*/

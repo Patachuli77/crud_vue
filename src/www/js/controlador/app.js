@@ -42,6 +42,7 @@ class Controlador{
 	 * Metodo que muestra la vista de listar
 	 */
 	pulsarHeadList(){
+		this.listar()
 		this.mainList.ver(true)
 		
 		this.mainEdit.ver(false)

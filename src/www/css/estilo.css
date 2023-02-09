@@ -220,7 +220,7 @@ div#buscar input{
 
 
 /*Especiales y errores**/
-#edicion,#consulta,#busqueda{
+#busqueda{
     display: none;
 }
 h3.error{
