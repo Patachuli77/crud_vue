@@ -19,6 +19,7 @@ export function VistaAlta (controlador){
 					ver: false,
 					oto: false,
 					inv: false,
+					pol: false,
 				},
 			}
 		},
@@ -46,6 +47,7 @@ export function VistaAlta (controlador){
 				<label><input type="checkbox" v-model=objeto.ver name="ver"> Verano</label>
 				<label><input type="checkbox" v-model=objeto.oto name="oto"> Otoño</label>
 				<label><input type="checkbox" v-model=objeto.inv name="inv"> Invierno</label>
+				<label><input type="checkbox" v-model=objeto.pol name="pol"> Acepto sin reservas la <b @click=politica>politica de proteccion de datos personales</b></label>
 				<h3 class="error">Rellene las categorias marcadas para continuar</h3>
 				<h3 class="error">No se admiten valores negativos en la talla</h3>
 			</div>
@@ -70,10 +72,11 @@ export function VistaAlta (controlador){
 				let descripcion = this.objeto.descripcion
 				let tipo = this.objeto.tipo
 				let valArray = true
-				/*let div =$('<div></div>')
-				let p = $('<p></p>').text("Su prenda ha sido añadida correctamente, revise el listado")
-				div.attr('title', 'Enhorabuena')
-				div.append(p)*/
+				let pol = this.objeto.pol
+				let div =$('<div></div>')
+				let p = $('<p></p>')
+				
+				div.append(p)
 
 				let array = []
 				array.push(this.objeto.pri,this.objeto.ver,this.objeto.oto,this.objeto.inv)
@@ -82,39 +85,19 @@ export function VistaAlta (controlador){
 					valArray= false
 				}
 				
-				if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || valArray==false){
-					console.log('mal')
-					if (nombre==''){
-						this.h3Error1.css('display','block')
-						this.lbNombre.addClass("textoerror",1000)
-					} 
-					if (talla==''){
-						this.h3Error1.css('display','block')
-						this.lbTalla.addClass("textoerror",1000)
-					} 
-					if (dia==''){
-						this.h3Error1.css('display','block')
-						this.lbDia.addClass("textoerror",1000)
-					} 
-					if (descripcion==''){
-						this.h3Error1.css('display','block')
-						this.lbDescripcion.addClass("textoerror",1000)
-					} 
-					if (valArray==false){
-						this.h3Error1.css('display','block')
-						this.lbEstacion.addClass("textoerror",1000)
-					} 
-					if (talla<0){
-						this.h3Error2.css('display','block')
-						this.lbTalla.addClass("textoerror",1000)
-					} 	
+				if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || pol==false ||valArray==false){
+					div.attr('title', 'Error')
+					p.text("Por favor rellene todos los campos para poder añadir una prenda")
+					div.dialog()
 				}else{
 					console.log(this.controlador)
 					let objeto = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
 					this.controlador.insertar(objeto)
 					
-					//this.limpiar()
-					//div.dialog()
+					this.limpiar()
+					div.attr('title', 'Enhorabuena')
+					p.text("Su prenda ha sido añadida correctamente, revise el listado")
+					div.dialog()
 					if(num==0){
 						
 						this.volver()
@@ -125,7 +108,7 @@ export function VistaAlta (controlador){
 			* Metodo que vuelve a la vista principal sin realizar cambios
 			*/
 			volver(){
-				//this.limpiar()
+				this.limpiar()
 				
 				this.controlador.pulsarHeadList()
 			},
@@ -133,32 +116,25 @@ export function VistaAlta (controlador){
 			* Metodo que limpia el formulario cada vez que se inicializa
 			*/
 			limpiar(){
-				this.op1.attr('selected','selected')
-				this.pri.prop("checked",false)
-				this.ver.prop("checked",false)	
-				this.oto.prop("checked",false)		
-				this.inv.prop("checked",false)
-
-
-				
-				this.formNombre.val('')
-				this.formTalla.val('')
-				this.formDia.val('')
-				this.formDescripcion.val('')
-
-				this.h3Error2.css('display','none')
-				this.h3Error1.css('display','none')
-				this.lbNombre.removeClass("textoerror")
-				this.lbTalla.removeClass("textoerror")
-				this.lbDia.removeClass("textoerror")
-				this.lbDescripcion.removeClass("textoerror")
-				this.lbEstacion.removeClass("textoerror")
+				this.objeto.nombre= null
+				this.objeto.talla= null
+				this.objeto.diaComprado= null
+				this.objeto.descripcion= null
+				this.objeto.tipo= null
+				this.objeto.pri= false
+				this.objeto.ver= false
+				this.objeto.oto= false
+				this.objeto.inv= false
+				this.objeto.pol=false
 			},
 			ver(ver){
 				if(ver)
 					this.mostrar = 'flex'
 				else
 				this.mostrar ='none'
+			},
+			politica(){
+				this.controlador.pulsarTerminos()
 			}
 		}
 	})

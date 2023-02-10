@@ -131,10 +131,10 @@ main#alta div.botones button.aceptar{
     background-color: lightgreen;
 }
 .ui-dialog{
-    background-color: lightgreen;
+    background-color: lightblue;
 }
 .ui-dialog-titlebar{
-    background-color: green;
+    background-color:aqua;
 }
 .ui-dialog-titlebar-close{
     float:right;
@@ -235,4 +235,36 @@ h3.error{
 }
 .none{
     display: none !important;
+}
+.cookies {
+    z-index: 10;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: black;
+	color: white;
+	font-family: arial;
+	text-align: center;
+}
+
+.cookies__boton {
+	background: initial;
+	border: 2px solid white;
+	padding: 1rem;
+	font-size: 1rem;
+	color: white;
+	width: 8rem;
+	text-align: center;
+}
+/*Footer*/
+footer{
+    position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: black;
+	color: white;
+	font-family: arial;
+	text-align: center;
 }

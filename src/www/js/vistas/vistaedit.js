@@ -64,8 +64,6 @@ export function VistaEdit(controlador){
 			 */
 			mostrarDatos(ropa){
 				
-				this.limpiar()
-				this.quitarErrores()
 				this.objeto.id = ropa.id
 				console.log(ropa)
 				
@@ -81,23 +79,7 @@ export function VistaEdit(controlador){
 				this.objeto.inv = ropa.estacion[3]
 		
 			},
-			/**
-			 * Metodo que limpia el formulario despues de su uso por si acacso
-			 */
-			limpiar(){
-				/*this.op1.attr('selected','selected')
-				
-				this.pri.prop("checked",false)
-				this.ver.prop("checked",false)
-				this.oto.prop("checked",false)		
-				this.inv.prop("checked",false)
-
-				
-				this.nombre.val('')
-				this.talla.val('')
-				this.dia.val('')
-				this.descripcion.val('')*/
-			},/**
+			/*
 			* MEtodo que llama al controlador para borrar
 			*/
 			borrar(){
@@ -114,7 +96,10 @@ export function VistaEdit(controlador){
 				let descripcion = this.objeto.descripcion
 				let tipo = this.objeto.tipo
 				let valArray = true
+				let div =$('<div></div>')
+				let p = $('<p></p>')
 				
+				div.append(p)
 				let array = []
 				array.push(this.objeto.pri,this.objeto.ver,this.objeto.oto,this.objeto.inv)
 				
@@ -123,55 +108,20 @@ export function VistaEdit(controlador){
 				}
 				
 				if (nombre=='' || talla==''||talla<0 || dia=='' || descripcion=='' || valArray==false){
-					if (nombre==''){
-						this.h3Error1.css('display','block')
-						this.lbNombre.addClass("textoerror",1000)
-					} 
-					if (talla==''){
-						this.h3Error1.css('display','block')
-						this.lbTalla.addClass("textoerror",1000)
-					} 
-					if (dia==''){
-						this.h3Error1.css('display','block')
-						this.lbDia.addClass("textoerror",1000)
-					} 
-					if (descripcion==''){
-						this.h3Error1.css('display','block')
-						this.lbDescripcion.addClass("textoerror",1000)
-					} 
-					if (valArray==false){
-						this.h3Error1.css('display','block')
-						this.lbEstacion.addClass("textoerror",1000)
-					} 
-					if (talla<0){
-						this.h3Error2.css('display','block')
-						this.lbTalla.addClass("textoerror",1000)
-					} 	
+					div.attr('title', 'Error')
+					p.text("Por favor rellene todos los campos para poder editar una prenda")
+					div.dialog()
 				}else{
 
 					let ropa = new Ropa(imagenSrc,nombre,talla,dia,descripcion,tipo,array)
 					this.controlador.guardar(this.objeto.id,ropa)
-					this.limpiar()
 					
 				}
 			},/**
 			* Metodo para volver a la vista anterior
 			*/
 			volver(){
-				this.quitarErrores()
 				this.controlador.pulsarHeadCons()
-			},
-			/**
-			 * Metodo para quitar los avisos por datos incorrectos
-			 */
-			quitarErrores(){
-				/*this.h3Error2.css('display','none')
-				this.h3Error1.css('display','none')
-				this.lbNombre.removeClass("textoerror")
-				this.lbTalla.removeClass("textoerror")
-				this.lbDia.removeClass("textoerror")
-				this.lbDescripcion.removeClass("textoerror")
-				this.lbEstacion.removeClass("textoerror")*/
 			},
 			ver(ver){
 				if(ver)

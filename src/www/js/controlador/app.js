@@ -11,6 +11,11 @@ import{VistaEdit} from '../vistas/vistaedit.js'
 import {VistaHead} from '../vistas/vistahead.js'
 import {VistaCons} from '../vistas/vistacons.js'
 import{VistaBusq} from '../vistas/vistabusq.js'
+import{VistaAvsL} from '../vistas/vistaaviso.js'
+import{VistaFooter} from '../vistas/vistafooter.js'
+import{VistaTerm} from '../vistas/vistaterm.js'
+import{VistaPolCoo} from '../vistas/vistapolcoo.js'
+import{VistaProp} from '../vistas/vistaprop.js'
 
 class Controlador{
 	/**
@@ -31,6 +36,11 @@ class Controlador{
 		this.mainAlta = new VistaAlta(this).mount('#alta')
         this.mainCons = new VistaCons(this).mount('#consulta')
 		this.mainBusq = new VistaBusq(this).mount('#busqueda')
+		this.mainAvsL = new VistaAvsL(this).mount('#aviso')
+		this.mainTerm = new VistaTerm(this).mount('#terminos')
+		this.mainPolCoo = new VistaPolCoo(this).mount('#politicaCo')
+		this.mainProp = new VistaProp(this).mount('#propiedad')
+		this.vistafooter = new VistaFooter(this).mount('#footer')
 		
 		this.mainList.ver(true)
 		
@@ -38,61 +48,72 @@ class Controlador{
 	descubrir(){
 		this.vistaHead.descubrir()
 	}	
-	/**
-	 * Metodo que muestra la vista de listar
-	 */
-	pulsarHeadList(){
-		this.listar()
-		this.mainList.ver(true)
-		
+	nover(){
+		this.mainList.ver(false)
 		this.mainEdit.ver(false)
 		this.mainAlta.ver(false)
         this.mainCons.ver(false)
 		this.mainBusq.ver(false)
+		this.mainAvsL.ver(false)
+		this.mainTerm.ver(false)
+		this.mainProp.ver(false)
+		this.mainPolCoo.ver(false)
+	}
+	/**
+	 * Metodo que muestra la vista de listar
+	 */
+	pulsarHeadList(){
+		this.nover()
+		this.listar()
+		this.mainList.ver(true)
 	}
 	/**
 	 * Metodo que muesta la vista de la edicion
 	 */
 	pulsarHeadEdit(){
-		this.mainList.ver(false)
+		this.nover()
 		this.mainEdit.ver(true)
-		this.mainAlta.ver(false)
-        this.mainCons.ver(false)
-		this.mainBusq.ver(false)
 	}
 	/**
 	 * Metodo que muestra la vista del alta
 	 */
-	pulsarHeadAlta(){
-		//this.mainAlta.limpiar()
-		this.mainList.ver(false)
-		this.mainEdit.ver(false)
+	pulsarHeadAlta(){		
+		this.nover()
 		this.mainAlta.ver(true)
-        this.mainCons.ver(false)
-		this.mainBusq.ver(false)
 	}
     /**
 	 * Metodo que muestra la vista de la consulta de datos
 	 */
-	pulsarHeadCons(){
-		
-		this.mainList.ver(false)
-		this.mainEdit.ver(false)
-		this.mainAlta.ver(false)
-        this.mainCons.ver(true)
-		this.mainBusq.ver(false)
-		
+	pulsarHeadCons(){	
+		this.nover()
+        this.mainCons.ver(true)	
 	}
 	/**
 	 * Metodo que muestra la vista de buscar
 	 */
 	pulsarBuscar(){
-		this.mainList.ver(false)
-		this.mainEdit.ver(false)
-		this.mainAlta.ver(false)
-        this.mainCons.ver(false)
+		this.nover()
 		this.mainBusq.ver(true)
+	} 
+	pulsarTerminos() {
+		this.nover()
+		this.mainTerm.ver(true)
 	}
+  	pulsarAvisosLegales() {
+		this.nover()
+		this.mainAvsL.ver(true)
+    }
+    pulsarPolitica() {
+		this.nover()
+		this.mainPolCoo.ver(true)
+    }
+    pulsarPropiedad() {
+		this.nover()
+		this.mainProp.ver(true)
+    }
+
+
+
 	/**
 	 * Metodo que llama al modelo para insertar datos en el indexed
 	 * @param {Object} objeto 
