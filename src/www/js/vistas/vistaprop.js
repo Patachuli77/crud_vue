@@ -11,7 +11,7 @@ export function VistaProp(controlador) {
 	<div :class=mostrar>
 		<div>
 			<h1>Propiedad Intelectual</h1>
-			<p>El logotipo de Viermario es original y esta protegido mediante derechos de autor</p>
+			<p>El logotipo de Virmario es original y esta protegido mediante derechos de autor</p>
             <p>La imagen de la camiseta esta sacada de https://commons.wikimedia.org/wiki/File:Camiseta_Blanca_con_cuello_en_V.jpg con licencia Creative Commons Attribution-Share Alike 4.0 International</p>
             <p>La tipografia league spartan esta descargada de google fonts bajo licencia SIL Open Font License</p>
 		</div>
